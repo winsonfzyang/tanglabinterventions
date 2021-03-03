@@ -1,0 +1,48 @@
+/* Stroop/emoStroop */
+
+.stroop_instr {
+    font-size: 36px;
+}
+
+
+.stroop_feedback {
+    font-size: 72px;
+}
+
+.center-fit {
+    width:70%;
+    height:auto;
+    overflow:hidden;
+    display:block;
+    margin: auto;
+}
+
+.color_red {
+    color:#ff0000;
+    font-weight: bold;
+}
+
+.color_blue {
+    color:#00caff;
+    font-weight: bold;
+}
+
+
+/* Centered text */
+.emostimcontainer {
+    position: relative;
+    text-align: center;
+    color: #ffffff;
+}
+
+.emostim {
+    width:30%;
+}
+
+.emostimword {
+    font-size: 72px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
