@@ -67,23 +67,6 @@ wmt_instrhelper.end_block =
     "<p class='continue_next'>You may now continue with the next block.</p>" +
     "</div>";
 
-/* Instructions */
-var wmt_instr = {
-    type: 'instructions',
-    data: {
-        exp_id: "WMT",
-        trial_id: "instructions"
-    },
-    pages: [
-        // Page 1
-        wmt_instrhelper.page1a, wmt_instrhelper.page1b,
-        wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back,  wmt_instrhelper.page2_4back,
-        wmt_instrhelper.page3,
-        wmt_instrhelper.page4,
-    ],
-    show_clickable_nav: true,
-    show_page_number: true,
-};
 /* N-back Instructions */
 function makeNbackInstr() {
     Nbackinstr = [];

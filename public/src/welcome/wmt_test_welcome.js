@@ -47,26 +47,9 @@ welcome.click.consent = function() {
 };
 welcome.click.demographics = function() {
     daynumber = welcome.helpers.getRadioButton("day");
-    partAB = welcome.helpers.getRadioButton("partnumber");
-    lastDigit = document.getElementById("partID").value;
-    // Get condition
-    WMT_PARTS = ["c-wmt", "r-wmt"];
-    if (lastDigit.match(/^[a-zA-Z]+$/)) { // if alphabet
-        // take first character of name, turn into number, and assign condition
-        firstchar = lastDigit.toLowerCase().charCodeAt(0) - 96;
-    } else { // if numbers
-        firstchar = lastDigit;
-    }
-    oddevencheck = firstchar % 2
-    if (oddevencheck === 0){
-        wmt_condition = WMT_PARTS;
-    } else {
-        wmt_condition = WMT_PARTS.reverse()
-    }
 
-    if(daynumber === "" || partAB === "NA"){
-        if(daynumber === "" ){alert("Please select a day!");}
-        if(partAB === "NA" ){alert("Please select a test part!");}
+    if(daynumber === ""){
+        alert("Please select a day!");
     } else {
         welcome.helpers.setDisplay("demographics", "none");
         welcome.helpers.setDisplay("header", "none");
@@ -75,7 +58,6 @@ welcome.click.demographics = function() {
             ID_DATE: document.getElementById("partID").value + "_" + DATE,
             daynumber: welcome.helpers.getRadioButton("day"),
             gender: welcome.helpers.getRadioButton("gender"),
-            partnumber: welcome.helpers.getRadioButton("partnumber"),
             age: document.getElementById("age").value
         });
         // start the jsPsych experiment
@@ -88,13 +70,17 @@ welcome.click.demographics = function() {
             //     if (wmt_condition[1] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PreTest();}
             //     if (wmt_condition[1] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PreTest();}
             // }
-            if (partAB === "C-WMT") {
-                jsPsych.data.addProperties({wmttype: "c-wmt"});
-                start_CWMT_PreTest();
-            } else {
-                jsPsych.data.addProperties({wmttype: "r-wmt"});
-                start_RWMT_PreTest();
-            }
+
+            // if (partAB === "C-WMT") {
+            //     jsPsych.data.addProperties({wmttype: "c-wmt"});
+            //     start_CWMT_PreTest();
+            // } else {
+            //     jsPsych.data.addProperties({wmttype: "r-wmt"});
+            //     start_RWMT_PreTest();
+            // }
+
+            start_RWMT_PreTest();
+
         }
         if (daynumber == "Post-test") {
             // wmt_condition = wmt_condition.reverse();
@@ -106,13 +92,16 @@ welcome.click.demographics = function() {
             //     if (wmt_condition[1] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PostTest(); }
             //     if (wmt_condition[1] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PostTest();}
             // }
-            if (partAB === "C-WMT") {
-                jsPsych.data.addProperties({wmttype: "c-wmt"});
-                start_CWMT_PostTest();
-            } else {
-                jsPsych.data.addProperties({wmttype: "r-wmt"});
-                start_RWMT_PostTest();
-            }
+
+            // if (partAB === "C-WMT") {
+            //     jsPsych.data.addProperties({wmttype: "c-wmt"});
+            //     start_CWMT_PostTest();
+            // } else {
+            //     jsPsych.data.addProperties({wmttype: "r-wmt"});
+            //     start_RWMT_PostTest();
+            // }
+            jsPsych.data.addProperties({wmttype: "r-wmt"});
+            start_RWMT_PostTest();
         }
     }
 };
@@ -162,10 +151,6 @@ welcome.section.demographics =
     '           <input type="radio" name="day" value="Pre-test" /> Pre-test &nbsp; ' +
     '           <input type="radio" name="day" value="Post-test" /> Post-test &nbsp;' +
     '           <br/><br/>' +
-    '			<!-- Testing Part A or B -->' +
-    '           <label for="partnumber"><b>Part: &nbsp;</b></label>' +
-    '           <input type="radio" name="partnumber" value="C-WMT" /> C-WMT &nbsp; ' +
-    '           <input type="radio" name="partnumber" value="R-WMT" /> R-WMT &nbsp;' +
     '		<br><br>' +
     '		<!-- Demographics  button -->' +
     '        <p align="center">' +

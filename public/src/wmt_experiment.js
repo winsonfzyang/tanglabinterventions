@@ -205,8 +205,8 @@ function start_RWMT_PostTest() {
 
         timeline: [
             ...welcome_block,
-            ...rwmt_test_block,
-            ...stroop_block
+            //...rwmt_test_block,
+            ...stroop_post_block
         ],
 
         /* on_close currently not working */
@@ -231,7 +231,7 @@ function start_CWMT_PostTest() {
         timeline: [
             ...welcome_block,
             ...cwmt_test_block,
-            ...stroop_block
+            ...stroop_post_block
         ],
 
         /* on_close currently not working */

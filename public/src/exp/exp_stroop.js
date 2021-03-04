@@ -34,8 +34,7 @@ stroop_instrhelper.page2 =
 
 stroop_instrhelper.page3 =
     "<div class='stroop_instr'>" +
-    "<p>Now, you will see colored word appear one at a time. For example, you may see:</p>" +
-    "<p><span class ='color_red'>red</span>, <span class='color_blue'>red</span>, <span class ='color_red'>blue</span>, or <span class ='color_blue'>blue</span>, .</p>" +
+    "<p>Now, you will see colored word appear one at a time. This time, the color and word may not match.</p>" +
     "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
     "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >f</span> key.</p>" +
     "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>j</span> key.</p>" +
@@ -59,6 +58,13 @@ stroop_instrhelper.end_block =
     "<div class='stroop_instr'>" +
     "<p class='continue_next'>Great job and thank you! You are now finished with this test." +
     "<br>Please continue to the next block.</p>" +
+    "</div>";
+
+stroop_instrhelper.psottest =
+    "<div class='stroop_instr'>" +
+    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >f</span> key.</p>" +
+    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>j</span> key.</p>" +
+    "<p>It is important that you respond as quickly and accurately as possible. </p>" +
     "</div>";
 
 
@@ -91,7 +97,19 @@ var stroop2_instr = {
     show_clickable_nav: true,
     show_page_number: true,
 };
-
+var stroop_post_instr = {
+    type: 'instructions',
+    data: {
+        exp_id: "stroop",
+        trial_id: "instructions2"
+    },
+    pages: [
+        // Page 1
+        stroop_instrhelper.psottest
+    ],
+    show_clickable_nav: true,
+    show_page_number: true,
+};
 /* Fixation */
 var stroop_fixation = {
     type: "html-keyboard-response",
@@ -259,3 +277,6 @@ stroop_block.push(stroop2_pract_procedure);
 stroop_block.push(stroop_endpractice);
 stroop_block.push(stroop2_procedure);
 
+var stroop_post_block = [];
+stroop_post_block.push(stroop_post_instr);
+stroop_post_block.push(stroop2_procedure);
