@@ -89,8 +89,16 @@ var WMT_fixation = {
     type: "html-keyboard-response",
     data: {exp_id: "WMT", trial_id: "fixation", stimulus: "fixation"},
     stimulus: wmt_fixation_stim,
-    choices: jsPsych.NO_KEYS,
+    choices: ['A', 'L'],
     trial_duration: FIXATION_DURATION, // milliseconds
+    on_finish: function (data) {
+        if (data.match == true) {
+            data.correct = (data.key_press === 65)
+        }
+        if (data.match == false) {
+            data.correct = (data.key_press === 76)
+        }
+    }
 };
 /* N Back sequence trials */
 var n_back_trial = {
