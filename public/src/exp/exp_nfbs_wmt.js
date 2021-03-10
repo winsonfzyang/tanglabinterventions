@@ -55,6 +55,13 @@ wmt_instrhelper.page1a =
     "<p><img src='../img/WMT/nbackkeys.bmp' alt='nbackkeys' width='800'></p>" +
     "</div>";
 
+wmt_instrhelper.transition =
+    "<div class='WMT_instr'>" +
+    "<p>Thank you for completing the practice block. We will now proceed to the experimental block.</p>" +
+    "<p>This time, there will not be any feedback, so you will have to carry on until the task is finished. </p>" +
+    "<p>The experiment will start once you press the button.</p>" +
+    "</div>";
+
 wmt_instrhelper.break_block =
     "<div class='WMT_instr'>" +
     "<p class='continue_next'>Great job and thank you! You are now finished with this block." +
@@ -91,6 +98,7 @@ var WMT_fixation = {
     stimulus: wmt_fixation_stim,
     choices: ['A', 'L'],
     trial_duration: FIXATION_DURATION, // milliseconds
+    response_ends_trial: false,
     on_finish: function (data) {
         if (data.match == true) {
             data.correct = (data.key_press === 65)

@@ -164,8 +164,9 @@ var WMT_fixation = {
     type: "html-keyboard-response",
     data: {exp_id: "WMT", trial_id: "fixation", stimulus: "fixation"},
     stimulus: wmt_fixation_stim,
-    choices: jsPsych.NO_KEYS,
+    choices: ['A', 'L'],
     trial_duration: FIXATION_DURATION, // milliseconds
+    response_ends_trial: false
 };
 /* N Back sequence trials */
 var n_back_trial = {
@@ -375,13 +376,13 @@ function createseqence(NBACK, TYPE){
     n_back_trials = firsttrials.concat(n_back_trials);
     if (TYPE === 'practice'){
         n_back_sequence = {
-            timeline: [WMT_fixation, n_back_trial, feedback],
+            timeline: [n_back_trial, WMT_fixation, feedback],
             timeline_variables: n_back_trials,
         }
 
     } else  {
         n_back_sequence = {
-            timeline: [WMT_fixation, n_back_trial],
+            timeline: [n_back_trial, WMT_fixation],
             timeline_variables: n_back_trials,
         }
     }
