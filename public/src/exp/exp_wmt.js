@@ -447,8 +447,8 @@ n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 
 // Practice block
 var wmt_prac_block = [];
-// wmt_prac_block.push(wmt_instr);
-for (var i = 0; i <= 3; ++i) {
+wmt_prac_block.push(wmt_instr);
+for (var i = 0; i < 3; ++i) {
     wmt_prac_block.push(N_back_instr[i]);
     wmt_prac_block.push(WMT_firstfixation);
     wmt_prac_block.push(n_back_sequences_practice[i]);
