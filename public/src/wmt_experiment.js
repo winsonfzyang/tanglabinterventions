@@ -247,6 +247,17 @@ function start_CWMT_PostTest() {
 // For fMRI-Practice
 function start_practice() {
 
+    daynumber = "practice";
+    wmttype = "c-wmt";
+    partID = "9999";
+
+    jsPsych.data.addProperties({  // record the condition assignment in the jsPsych data
+        ID: 9999,
+        ID_DATE: partID + "_" + DATE,
+        daynumber: daynumber,
+        wmttype: wmttype,
+    });
+
     /* start the experiment */
     jsPsych.init({
         show_progress_bar: false,

@@ -134,7 +134,7 @@ var wmt_instr = {
     pages: [
         // Page 1
         wmt_instrhelper.page1a, wmt_instrhelper.page1b,
-        wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back,  wmt_instrhelper.page2_4back,
+        wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back,
         wmt_instrhelper.page3,
         wmt_instrhelper.page4,
     ],
