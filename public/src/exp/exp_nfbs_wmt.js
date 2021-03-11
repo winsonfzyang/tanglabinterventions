@@ -92,9 +92,45 @@ function makeNbackInstr() {
 }
 N_back_instr = makeNbackInstr();
 /* Fixation */
-var WMT_fixation = {
+var WMT_firstfixation = {
+    on_start: function (trial) {
+        phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
+        nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
+
+        trial.data = {
+            exp_id: 'WMT',
+            trial_id: "fixation",
+            phase: phase,
+            nback: nback,
+            stimulus: "fixation",
+        };
+    },
+
     type: "html-keyboard-response",
-    data: {exp_id: "WMT", trial_id: "fixation", stimulus: "fixation"},
+    data: "",
+    stimulus: wmt_fixation_stim,
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 500, // milliseconds
+    response_ends_trial: false
+};
+var WMT_fixation = {
+    on_start: function (trial) {
+        phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
+        nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
+        mymatch = jsPsych.data.getLastTrialData().values()[0]["match"];
+
+        trial.data = {
+            exp_id: 'WMT',
+            trial_id: "fixation",
+            phase: phase,
+            nback: nback,
+            match: mymatch,
+            stimulus: "fixation",
+        };
+    },
+
+    type: "html-keyboard-response",
+    data: "",
     stimulus: wmt_fixation_stim,
     choices: ['A', 'L'],
     trial_duration: FIXATION_DURATION, // milliseconds
@@ -237,13 +273,13 @@ function createseqence(NBACK, TYPE){
     n_back_trials = firsttrials.concat(n_back_trials);
     if (TYPE === 'practice'){
         n_back_sequence = {
-            timeline: [WMT_fixation, n_back_trial, feedback],
+            timeline: [n_back_trial, WMT_fixation, feedback],
             timeline_variables: n_back_trials,
         }
 
     } else  {
         n_back_sequence = {
-            timeline: [WMT_fixation, n_back_trial],
+            timeline: [n_back_trial, WMT_fixation],
             timeline_variables: n_back_trials,
         }
     }
@@ -286,6 +322,7 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
         for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
             exp_block.push(N_back_instr[nbacktest_i]);
+            exp_block.push(WMT_firstfixation);
             exp_block.push(n_back_sequences_i[nbacktest_i]);
         }
         // inter-

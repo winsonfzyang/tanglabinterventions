@@ -14,8 +14,8 @@ const nbackarray14 = [0, 1, 2, 3];
 const nbackarray13 = [0, 1, 2];
 const PERCENTCORRECTPRACT = 0.40;
 const PERCENTCORRECT = 0.30;
-const FIXATION_DURATION = 2500; // 1000
-const PICTURE_DURATION = 500; // 2000
+const FIXATION_DURATION = 2500; // 2500
+const PICTURE_DURATION = 500; // 500
 const FDBCK_DUR = 1000; // 1000
 const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20; // 20 trials
@@ -160,13 +160,57 @@ function makeNbackInstr() {
 }
 N_back_instr = makeNbackInstr();
 /* Fixation */
-var WMT_fixation = {
+var WMT_firstfixation = {
+    on_start: function (trial) {
+        phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
+        nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
+
+        trial.data = {
+            exp_id: 'WMT',
+            trial_id: "fixation",
+            phase: phase,
+            nback: nback,
+            stimulus: "fixation",
+        };
+    },
+
     type: "html-keyboard-response",
-    data: {exp_id: "WMT", trial_id: "fixation", stimulus: "fixation"},
+    data: "",
+    stimulus: wmt_fixation_stim,
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 500, // milliseconds
+    response_ends_trial: false
+};
+var WMT_fixation = {
+    on_start: function(trial) {
+        phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
+        nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
+        mymatch = jsPsych.data.getLastTrialData().values()[0]["match"];
+
+        trial.data = {
+            exp_id: 'WMT',
+            trial_id: "fixation",
+            phase: phase,
+            nback: nback,
+            match: mymatch,
+            stimulus: "fixation",
+        };
+    },
+    type: "html-keyboard-response",
+    data: "",
     stimulus: wmt_fixation_stim,
     choices: ['A', 'L'],
     trial_duration: FIXATION_DURATION, // milliseconds
-    response_ends_trial: false
+    response_ends_trial: false,
+    on_finish: function (data) {
+        if (data.match == true) {
+            data.correct = (data.key_press === 65)
+        }
+        if (data.match == false) {
+            data.correct = (data.key_press === 76)
+        }
+
+    }
 };
 /* N Back sequence trials */
 var n_back_trial = {
@@ -403,9 +447,10 @@ n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 
 // Practice block
 var wmt_prac_block = [];
-wmt_prac_block.push(wmt_instr);
+// wmt_prac_block.push(wmt_instr);
 for (var i = 0; i <= 3; ++i) {
     wmt_prac_block.push(N_back_instr[i]);
+    wmt_prac_block.push(WMT_firstfixation);
     wmt_prac_block.push(n_back_sequences_practice[i]);
     wmt_prac_block.push(overallfeedback);
 }
@@ -474,6 +519,7 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
         for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
             exp_block.push(N_back_instr[nbacktest_i]);
+            exp_block.push(WMT_firstfixation);
             exp_block.push(n_back_sequences_i[nbacktest_i]);
         }
         // inter-
