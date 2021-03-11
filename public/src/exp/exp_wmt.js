@@ -4,10 +4,16 @@
 
 // Set task variables
 var sequence = [];
-var wmt_fixation_stim = "<img class='center-fit' src='../img/WMT/cross.bmp'>"
+var wmt_fixation_stim0 = "../img/WMT/cross.bmp"
+var wmt_fixation_stim = "<img class='center-fit' src='" + wmt_fixation_stim0 + "'>"
 var n_back_set = ["../img/WMT/1f.bmp", "../img/WMT/2f.bmp", "../img/WMT/3f.bmp", "../img/WMT/4f.bmp",
     "../img/WMT/5f.bmp", "../img/WMT/6f.bmp", "../img/WMT/7f.bmp", "../img/WMT/8f.bmp"];
+var n_back_instr_set0 = ["../img/WMT/intro1.bmp", "../img/WMT/intro2.bmp", "../img/WMT/intro3.bmp", "../img/WMT/intro4.bmp"];
 var n_back_instr_set = ["../img/WMT/intro1.bmp", "../img/WMT/intro2.bmp", "../img/WMT/intro3.bmp", "../img/WMT/intro4.bmp"];
+for (var i = 0; i <= 3; ++i) {
+    n_back_instr_set[i] = "<p><img src='" + n_back_instr_set0[i] + "' width='800'></p>"
+}
+
 
 // Constants
 const nbackarray14 = [0, 1, 2, 3];
@@ -26,6 +32,16 @@ const NTRAININGBLOCKS = 8; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
 var letter1;
+
+/* Pre-loading */
+var preload = {
+    type: 'preload',
+    auto_preload: true, // automatically load all files based on the main timeline
+    images: [wmt_fixation_stim0, ...n_back_set],
+    message: 'Please wait while the experiment loads. This may take a few minutes.',
+    error_message: 'The experiment failed to load. Please contact the researcher.',
+    show_detailed_errors: true
+};
 
 function shuffle(array) {array.sort(() => Math.random() - 0.5)}
 function permutator(inputArr) {
@@ -81,15 +97,6 @@ wmt_instrhelper.page2_4back =
     "<p><img src='../img/WMT/instr4back.bmp' alt='instr4back' width='800'></p>" +
     "</div>";
 
-wmt_instrhelper.page3 =
-    "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg2.bmp' alt='instrpg2' width='800'></p>" +
-    "</div>";
-
-wmt_instrhelper.page4 =
-    "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg3.bmp' alt='instrpg3' width='800'></p>" +
-    "</div>";
 
 wmt_instrhelper.conditional =
     "<div class='WMT_instr'>" +
@@ -124,6 +131,10 @@ wmt_instrhelper.end_block =
     "<p class='continue_next'>You may now continue with the next block.</p>" +
     "</div>";
 
+var n_back_instr_set2 = [wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back];
+
+
+
 /* Instructions */
 var wmt_instr = {
     type: 'instructions',
@@ -133,17 +144,15 @@ var wmt_instr = {
     },
     pages: [
         // Page 1
-        wmt_instrhelper.page1a, wmt_instrhelper.page1b,
-        wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back,
-        wmt_instrhelper.page3,
-        wmt_instrhelper.page4,
+        wmt_instrhelper.page1a, wmt_instrhelper.page1b
     ],
+    key_forward: 'l',
+    key_backward: 'a',
     show_clickable_nav: true,
     show_page_number: true,
 };
 /* N-back Instructions */
-function makeNbackInstr() {
-
+function makeNbackInstr(instr_set) {
     Nbackinstr = [];
     for (var i = 0; i <= 3; ++i) {
         N_back_instr_i = {
@@ -152,13 +161,16 @@ function makeNbackInstr() {
                 exp_id: "WMT",
                 phase: "nback-instr"
             },
-            stimulus: "<p><img src=" + n_back_instr_set[i] + " width='800'></p>",
+            stimulus: instr_set[i],
         };
         Nbackinstr[i] = N_back_instr_i;
     }
     return Nbackinstr
 }
-N_back_instr = makeNbackInstr();
+
+N_back_instr = makeNbackInstr(n_back_instr_set);
+N_back_instr2 = makeNbackInstr(n_back_instr_set2);
+
 /* Fixation */
 var WMT_firstfixation = {
     on_start: function (trial) {
@@ -199,7 +211,7 @@ var WMT_fixation = {
     type: "html-keyboard-response",
     data: "",
     stimulus: wmt_fixation_stim,
-    choices: ['A', 'L'],
+    choices: ['a', 'l'],
     trial_duration: FIXATION_DURATION, // milliseconds
     response_ends_trial: false,
     on_finish: function (data) {
@@ -292,6 +304,9 @@ var overallfeedback = {
         lastRow = test_trials[test_trials.length-1];
 
         test_trials = test_trials.filter(trial => trial.nback == lastRow["nback"]);
+        test_trials = test_trials.filter(trial => trial.stimulus == "fixation");
+
+        console.log(test_trials)
 
         HOWMANYBACK = lastRow["nback"]
         SEQLENGTH = test_trials.length;
@@ -449,6 +464,7 @@ n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 var wmt_prac_block = [];
 wmt_prac_block.push(wmt_instr);
 for (var i = 0; i < 3; ++i) {
+    wmt_prac_block.push(N_back_instr2[i]);
     wmt_prac_block.push(N_back_instr[i]);
     wmt_prac_block.push(WMT_firstfixation);
     wmt_prac_block.push(n_back_sequences_practice[i]);

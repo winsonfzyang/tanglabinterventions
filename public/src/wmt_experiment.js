@@ -91,6 +91,7 @@ function start_CWMT_Day() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: true,
         on_interaction_data_update: function(data) {
             var trial = jsPsych.currentTrial();
@@ -117,6 +118,7 @@ function start_RWMT_Day() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: true,
         on_interaction_data_update: function(data) {
             var trial = jsPsych.currentTrial();
@@ -142,9 +144,9 @@ function start_RWMT_Day() {
 
 // For Pre-Testing
 function start_RWMT_PreTest() {
-
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
@@ -170,6 +172,7 @@ function start_CWMT_PreTest() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
@@ -197,6 +200,7 @@ function start_RWMT_PostTest() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
@@ -205,7 +209,7 @@ function start_RWMT_PostTest() {
 
         timeline: [
             ...welcome_block,
-            //...rwmt_test_block,
+            ...rwmt_test_block,
             ...stroop_post_block
         ],
 
@@ -222,6 +226,7 @@ function start_CWMT_PostTest() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
@@ -260,6 +265,7 @@ function start_practice() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
