@@ -18,34 +18,23 @@ var stroop_instrhelper = {};
 
 stroop_instrhelper.page1 =
     "<div class='stroop_instr'>" +
-    "<p>In this experiment you will see colored XXXXX appear one at a time. For example, you may see:</p>" +
-    "<p><span class ='color_red'>XXXXX</span> or <span class='color_blue'>XXXXX</span>.</p>" +
+    "<p>In this experiment you will see colored word appear one at a time. </p>" +
     "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
-    "<p>If the word is colored <span class='color_red'>red</span>, press the <span class='color_red'>f</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>j</span> key.</p>" +
+    "<p>If the word is colored <span class='color_red'>red</span>, press the <span class='color_red'>A</span> key.</p>" +
+    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
     "<p>It is important that you respond as quickly and accurately as possible. </p>" +
     "</div>";
+
 
 stroop_instrhelper.page2 =
     "<div class='stroop_instr'>" +
-    "<p>In the next page we will start to practice this. " +
-    "If you have any questions, please contact the experimenter before proceeding.</p>" +
-    "</div>";
-
-stroop_instrhelper.page3 =
-    "<div class='stroop_instr'>" +
     "<p>Now, you will see colored word appear one at a time. This time, the color and word may not match.</p>" +
     "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
-    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >f</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>j</span> key.</p>" +
+    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >A</span> key.</p>" +
+    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
     "<p>It is important that you respond as quickly and accurately as possible. </p>" +
     "</div>";
 
-stroop_instrhelper.page4 =
-    "<div class='stroop_instr'>" +
-    "<p>In the next page we will start to practice this. " +
-    "If you have any questions, please contact the experimenter before proceeding.</p>" +
-    "</div>";
 
 stroop_instrhelper.endpractice =
     "<div class='stroop_instr'>" +
@@ -60,10 +49,10 @@ stroop_instrhelper.end_block =
     "<br>Please continue to the next block.</p>" +
     "</div>";
 
-stroop_instrhelper.psottest =
+stroop_instrhelper.posttest =
     "<div class='stroop_instr'>" +
-    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >f</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>j</span> key.</p>" +
+    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >A</span> key.</p>" +
+    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
     "<p>It is important that you respond as quickly and accurately as possible. </p>" +
     "</div>";
 
@@ -77,9 +66,10 @@ var stroop1_instr = {
     },
     pages: [
         // Page 1
-        stroop_instrhelper.page1,
-        stroop_instrhelper.page2
+        stroop_instrhelper.page1
     ],
+    key_forward: 'l',
+    key_backward: 'a',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -91,9 +81,10 @@ var stroop2_instr = {
     },
     pages: [
         // Page 1
-        stroop_instrhelper.page3,
-        stroop_instrhelper.page4
+        stroop_instrhelper.page2
     ],
+    key_forward: 'l',
+    key_backward: 'a',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -105,8 +96,10 @@ var stroop_post_instr = {
     },
     pages: [
         // Page 1
-        stroop_instrhelper.psottest
+        stroop_instrhelper.posttest
     ],
+    key_forward: 'l',
+    key_backward: 'a',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -124,16 +117,16 @@ var stroop_fixation = {
 
 /*  Stimuli */
 var stroop1_factors = [
-    {color_class: 'color_red', word:'XXXXX', color: '#ff0000', stimulus_type: 'congruent', correct_response: 'f'},
-    {color_class: 'color_blue', word:'XXXXX', color: '#00caff', stimulus_type: 'congruent', correct_response: 'j'}
+    {color_class: 'color_red', word:'XXXXX', color: '#ff0000', stimulus_type: 'congruent', correct_response: 'a'},
+    {color_class: 'color_blue', word:'XXXXX', color: '#00caff', stimulus_type: 'congruent', correct_response: 'l'}
 ];
 var stroop2_congrfactors = [
-    {color_class: 'color_blue', word:'BLUE', color: '#00caff', stimulus_type: 'congruent', correct_response: 'j'},
-    {color_class: 'color_red', word: 'RED',color: '#ff0000',  stimulus_type: 'congruent', correct_response: 'f'},
+    {color_class: 'color_blue', word:'BLUE', color: '#00caff', stimulus_type: 'congruent', correct_response: 'l'},
+    {color_class: 'color_red', word: 'RED',color: '#ff0000',  stimulus_type: 'congruent', correct_response: 'a'},
 ];
 var stroop2_incongrfactors = [
-    {color_class: 'color_red', word:'BLUE', color: '#ff0000', stimulus_type: 'incongruent', correct_response: 'f'},
-    {color_class: 'color_blue', word: 'RED',color: '#00caff',  stimulus_type: 'incongruent', correct_response: 'j'},
+    {color_class: 'color_red', word:'BLUE', color: '#ff0000', stimulus_type: 'incongruent', correct_response: 'a'},
+    {color_class: 'color_blue', word: 'RED',color: '#00caff',  stimulus_type: 'incongruent', correct_response: 'l'},
 ];
 var stroop2_factors = {congruent: stroop2_congrfactors, incongruent: stroop2_incongrfactors};
 
@@ -228,7 +221,7 @@ function createseq(factors, BLOCK, TYPE) {
             };
         },
         type: 'html-keyboard-response',
-        choices: ['F', 'J'],
+        choices: ['A', 'L'],
         stimulus: "",
         data: "",
         trial_duration: STROOP_STIM_DURATION,
