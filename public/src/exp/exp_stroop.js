@@ -8,8 +8,8 @@ const STROOP_STIM_DURATION = 2000; // 2000
 const STROOP_POSTTRIAL_DURATION = 500; // 500
 const STROOP_FDBCK_DURATION = 1000; // 1000
 const PERCENTINCONGR = 0.20; // 20%
-const NPRACTTRIALS = 10; // 1 set = 10 trials
-const NEXPTRIALS = 160; // 80 trials
+const NPRACTTRIALS = 20; // 1 set = 10 trials
+const NEXPTRIALS = 120; // 60 trials
 const stroop_fixation_stim = "<div style='font-size: 72px'>+</div>";
 
 
@@ -18,21 +18,14 @@ var stroop_instrhelper = {};
 
 stroop_instrhelper.page1 =
     "<div class='stroop_instr'>" +
-    "<p>In this experiment you will see colored word appear one at a time. </p>" +
+    "<p>In this task you will see colored word appear one at a time. </p>" +
     "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
-    "<p>If the word is colored <span class='color_red'>red</span>, press the <span class='color_red'>A</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
+    "<p>If the word is colored <span class='color_red'>red</span>, press the <span class='color_red'>R</span> key." +
+    "<br>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>B</span> key." +
+    "<br>If the word is colored <span class='color_green'>green</span>, press the <span class='color_green'>G</span> key." +
+    "<br>If the word is colored <span class='color_yellow'>yellow</span>, press the <span class='color_yellow'>Y</span> key.</p>" +
     "<p>It is important that you respond as quickly and accurately as possible. </p>" +
-    "</div>";
-
-
-stroop_instrhelper.page2 =
-    "<div class='stroop_instr'>" +
-    "<p>Now, you will see colored word appear one at a time. This time, the color and word may not match.</p>" +
-    "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
-    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >A</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
-    "<p>It is important that you respond as quickly and accurately as possible. </p>" +
+    "<p>We will start with some practice. Press <b>SPACEBAR</b> to start. </p>" +
     "</div>";
 
 
@@ -51,14 +44,19 @@ stroop_instrhelper.end_block =
 
 stroop_instrhelper.posttest =
     "<div class='stroop_instr'>" +
-    "<p>If the word is colored <span class='color_red' >red</span>, press the <span class='color_red' >A</span> key.</p>" +
-    "<p>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>L</span> key.</p>" +
+    "<p>In this task you will see colored word appear one at a time. </p>" +
+    "<p>Your task is to press the button corresponding to the <strong> ink color </strong> of the word. </p>" +
+    "<p>If the word is colored <span class='color_red'>red</span>, press the <span class='color_red'>R</span> key." +
+    "<br>If the word is colored <span class='color_blue'>blue</span>, press the <span class='color_blue'>B</span> key." +
+    "<br>If the word is colored <span class='color_green'>green</span>, press the <span class='color_green'>G</span> key." +
+    "<br>If the word is colored <span class='color_yellow'>yellow</span>, press the <span class='color_yellow'>Y</span> key.</p>" +
     "<p>It is important that you respond as quickly and accurately as possible. </p>" +
+    "<p>The experiment will start once you press the button.</p>" +
     "</div>";
 
 
 /* Instructions */
-var stroop1_instr = {
+var stroop2_instr = {
     type: 'instructions',
     data: {
         exp_id: "stroop",
@@ -68,23 +66,7 @@ var stroop1_instr = {
         // Page 1
         stroop_instrhelper.page1
     ],
-    key_forward: 'l',
-    key_backward: 'a',
-    show_clickable_nav: true,
-    show_page_number: true,
-};
-var stroop2_instr = {
-    type: 'instructions',
-    data: {
-        exp_id: "stroop",
-        trial_id: "instructions2"
-    },
-    pages: [
-        // Page 1
-        stroop_instrhelper.page2
-    ],
-    key_forward: 'l',
-    key_backward: 'a',
+    key_forward: 'SPACE',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -98,8 +80,7 @@ var stroop_post_instr = {
         // Page 1
         stroop_instrhelper.posttest
     ],
-    key_forward: 'l',
-    key_backward: 'a',
+    key_forward: 'SPACE',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -108,6 +89,7 @@ var stroop_fixation = {
     type: "html-keyboard-response",
     data: {
         exp_id: 'stroop',
+        trial_id: 'fixation',
         stimulus: "fixation"
     },
     stimulus: stroop_fixation_stim,
@@ -116,19 +98,31 @@ var stroop_fixation = {
 };
 
 /*  Stimuli */
-var stroop1_factors = [
-    {color_class: 'color_red', word:'XXXXX', color: '#ff0000', stimulus_type: 'congruent', correct_response: 'a'},
-    {color_class: 'color_blue', word:'XXXXX', color: '#00caff', stimulus_type: 'congruent', correct_response: 'l'}
-];
 var stroop2_congrfactors = [
-    {color_class: 'color_blue', word:'BLUE', color: '#00caff', stimulus_type: 'congruent', correct_response: 'l'},
-    {color_class: 'color_red', word: 'RED',color: '#ff0000',  stimulus_type: 'congruent', correct_response: 'a'},
+    {color_class: 'color_red', word:'RED', color: '#ff0000', color2: 'red', stimulus_type: 'congruent', correct_response: 'r'},
+    {color_class: 'color_yellow', word:'YELLOW', color: '#ffe908', color2: 'yellow', stimulus_type: 'congruent', correct_response: 'y'},
+    {color_class: 'color_green', word:'GREEN', color: '#04ff2e', color2: 'green', stimulus_type: 'congruent', correct_response: 'g'},
+    {color_class: 'color_blue', word:'BLUE', color: '#00caff', color2: 'blue', stimulus_type: 'congruent', correct_response: 'b'}
 ];
 var stroop2_incongrfactors = [
-    {color_class: 'color_red', word:'BLUE', color: '#ff0000', stimulus_type: 'incongruent', correct_response: 'a'},
-    {color_class: 'color_blue', word: 'RED',color: '#00caff',  stimulus_type: 'incongruent', correct_response: 'l'},
+    {color_class: 'color_red', word:'YELLOW', color: '#ff0000', color2: 'red', stimulus_type: 'incongruent', correct_response: 'r'},
+    {color_class: 'color_red', word:'GREEN', color: '#ff0000', color2: 'red', stimulus_type: 'incongruent', correct_response: 'r'},
+    {color_class: 'color_red', word:'BLUE', color: '#ff0000', color2: 'red', stimulus_type: 'incongruent', correct_response: 'r'},
+
+    {color_class: 'color_yellow', word:'RED', color: '#ffe908', color2: 'yellow', stimulus_type: 'incongruent', correct_response: 'y'},
+    {color_class: 'color_yellow', word:'GREEN', color: '#ffe908', color2: 'yellow', stimulus_type: 'incongruent', correct_response: 'y'},
+    {color_class: 'color_yellow', word:'BLUE', color: '#ffe908', color2: 'yellow', stimulus_type: 'incongruent', correct_response: 'y'},
+
+    {color_class: 'color_green', word:'RED', color: '#04ff2e', color2: 'green', stimulus_type: 'incongruent', correct_response: 'g'},
+    {color_class: 'color_green', word:'YELLLOW', color: '#04ff2e', color2: 'green', stimulus_type: 'incongruent', correct_response: 'g'},
+    {color_class: 'color_green', word:'BLUE', color: '#04ff2e', color2: 'green', stimulus_type: 'incongruent', correct_response: 'g'},
+
+    {color_class: 'color_blue', word:'RED', color: '#00caff', color2: 'blue', stimulus_type: 'incongruent', correct_response: 'b'},
+    {color_class: 'color_blue', word:'YELLLOW', color: '#00caff', color2: 'blue', stimulus_type: 'incongruent', correct_response: 'b'},
+    {color_class: 'color_blue', word:'GREEN', color: '#00caff', color2: 'blue', stimulus_type: 'incongruent', correct_response: 'b'},
 ];
 var stroop2_factors = {congruent: stroop2_congrfactors, incongruent: stroop2_incongrfactors};
+var stroop2_practfactors = {congruent: stroop2_congrfactors, incongruent: jsPsych.randomization.sampleWithoutReplacement(stroop2_incongrfactors, 4)};
 
 /* feedback */
 var feedback = {
@@ -160,6 +154,7 @@ var stroop_endpractice = {
         // Page 1
         stroop_instrhelper.endpractice,
     ],
+    key_forward: 'SPACE',
     show_clickable_nav: true,
     show_page_number: true,
 };
@@ -168,13 +163,13 @@ var stroop_endpractice = {
 function createstim(factors, BLOCK, TYPE) {
     trials = [];
     if (BLOCK === "stroop2"){
-        NINCONGRUENTTRIALS = stroop2_factors.incongruent.length // gives 2
-        TOTALN = NINCONGRUENTTRIALS/PERCENTINCONGR // should give 10
-        NCONGRUENTTRIALS = TOTALN - NINCONGRUENTTRIALS // gives 8
-        CONGRMULTIPLIER = NCONGRUENTTRIALS/stroop2_factors.congruent.length // should give 4
+        NINCONGRUENTTRIALS = factors.incongruent.length // gives 12
+        TOTALN = NINCONGRUENTTRIALS/PERCENTINCONGR // should give 60
+        NCONGRUENTTRIALS = TOTALN - NINCONGRUENTTRIALS // gives 48
+        CONGRMULTIPLIER = NCONGRUENTTRIALS/factors.congruent.length // should give 12
         stroop2_congruent = [];
-        while(CONGRMULTIPLIER--){stroop2_congruent = stroop2_congruent.concat(stroop2_factors.congruent);}
-        stroop2_incongruent = stroop2_factors.incongruent;
+        while(CONGRMULTIPLIER--){stroop2_congruent = stroop2_congruent.concat(factors.congruent);}
+        stroop2_incongruent = factors.incongruent;
         mystroopfactors = [...stroop2_congruent, ...stroop2_incongruent];
     } else {
         mystroopfactors = factors;
@@ -189,7 +184,7 @@ function createstim(factors, BLOCK, TYPE) {
                 phase: TYPE,
                 trial_id: 'stimulus',
                 word: mystroopfactors[i].word,
-                color: mystroopfactors[i].color,
+                color: mystroopfactors[i].color2,
                 stimulus_type: mystroopfactors[i].stimulus_type,
                 correct_response: mystroopfactors[i].correct_response
             },
@@ -211,17 +206,18 @@ function createseq(factors, BLOCK, TYPE) {
             trial.stimulus = trialstimulus;
             trial.data = {
                 exp_id: 'stroop',
+                trial_id: 'stimulus',
                 block: data.block,
                 phase: data.phase,
                 stimulus: trialstimulus,
                 word: data.word,
-                color: data.color,
+                color: data.color2,
                 stimulus_type: data.stimulus_type,
                 correct_response: data.correct_response,
             };
         },
         type: 'html-keyboard-response',
-        choices: ['A', 'L'],
+        choices: ['r', 'g', 'b', 'y'],
         stimulus: "",
         data: "",
         trial_duration: STROOP_STIM_DURATION,
@@ -256,15 +252,12 @@ function createseq(factors, BLOCK, TYPE) {
     return stroop_procedure
 }
 
-var stroop1_pract_procedure = createseq(stroop1_factors, 'stroop1', 'practice');
-var stroop2_pract_procedure = createseq(stroop2_factors, 'stroop2', 'practice');
+var stroop2_pract_procedure = createseq(stroop2_practfactors, 'stroop2', 'practice');
 var stroop2_procedure = createseq(stroop2_factors, 'stroop2', 'exp')
 
 
 // TODO: repeat practice if accuracy less than 50%
 var stroop_block = [];
-stroop_block.push(stroop1_instr);
-stroop_block.push(stroop1_pract_procedure);
 stroop_block.push(stroop2_instr);
 stroop_block.push(stroop2_pract_procedure);
 stroop_block.push(stroop_endpractice);

@@ -22,6 +22,16 @@
     font-weight: bold;
 }
 
+.color_yellow {
+    color: #ffe908;
+    font-weight: bold;
+}
+
+.color_green {
+    color: #04ff2e;
+    font-weight: bold;
+}
+
 .color_blue {
     color:#00caff;
     font-weight: bold;
