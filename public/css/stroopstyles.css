@@ -58,12 +58,10 @@
 }
 
 /* Response Guide */
-#container { width: 80%; margin: auto; background-color: grey; padding: 20px; }
-.row { height: 150px; margin-bottom: 20px; position: relative; }
-.row div { height: 100%; }
-.single { background-color: white; }
-.column-2 { width: 48%; }
-.column-3 { width: 30%; }
-.left { background-color: yellow; float: left; }
-.center { float: left; margin: 0 5%; background-color: orange; }
-.right { background-color: green; float: right; }
+#container { width: 80%; margin: auto; background-color: black;}
+    .row { height: 150px;position: relative; }
+    .row div { height: 100%; }
+    .column-3 { width: 30%; }
+    .left { background-color: yellow; float: left; }
+    .center {text-align: center;}
+    .right { background-color: green; float: right; }
