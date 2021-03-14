@@ -61,12 +61,7 @@ app.post('/wmt-testing-data', function(request, response) {
     DAYNUMBER = rows[1].split(',')[DAYNUMBER_index];
     DAYNUMBER = DAYNUMBER.replace(/"/g, "");
 
-    PART_index = rows[0].split(',').indexOf('"partnumber"');
-    PART = rows[1].split(',')[PART_index];
-    PART = PART.replace(/"/g, "");
-
-
-    filename = "wmt/" + ID_DATE + "_" + DAYNUMBER + "_part" + PART + ".csv";
+    filename = "wmt/" + ID_DATE + "_day_" + DAYNUMBER + ".csv";
     saveDropbox(DATA_CSV, filename);
     response.end();
 });
