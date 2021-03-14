@@ -25,6 +25,7 @@ welcome.click.start = function() {
 welcome.click.demographics = function() {
     // Get Day number
     daynumber = document.getElementById("day").value;
+
     wmttype = welcome.helpers.getRadioButton("wmttype");
     if(daynumber === "" || wmttype === "NA"){
         if(daynumber === "" ){alert("Please select a day!");}
@@ -40,14 +41,26 @@ welcome.click.demographics = function() {
             wmttype: welcome.helpers.getRadioButton("wmttype"),
             age: document.getElementById("age").value
         });
-        // start the jsPsych experiment
-        if (wmttype == "c-wmt") {
-            start_CWMT_Day()
-            // if (daynumber == 1) {start_CWMT_Day1();} else {start_CWMT_Day();}
-        }
-        if (wmttype == "r-wmt") {
-            start_RWMT_Day()
-            // if (daynumber == 1) {start_RWMT_Day1();} else {start_RWMT_Day();}
+        if (daynumber>5){
+            // start the jsPsych experiment
+            if (wmttype == "c-wmt") {
+                start_CWMT2_Day()
+                // if (daynumber == 1) {start_CWMT_Day1();} else {start_CWMT_Day();}
+            }
+            if (wmttype == "r-wmt") {
+                start_RWMT2_Day()
+                // if (daynumber == 1) {start_RWMT_Day1();} else {start_RWMT_Day();}
+            }
+        } else{
+            // start the jsPsych experiment
+            if (wmttype == "c-wmt") {
+                start_CWMT_Day()
+                // if (daynumber == 1) {start_CWMT_Day1();} else {start_CWMT_Day();}
+            }
+            if (wmttype == "r-wmt") {
+                start_RWMT_Day()
+                // if (daynumber == 1) {start_RWMT_Day1();} else {start_RWMT_Day();}
+            }
         }
     }
 };

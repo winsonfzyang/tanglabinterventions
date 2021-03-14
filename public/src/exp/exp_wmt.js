@@ -159,6 +159,7 @@ function makeNbackInstr(instr_set) {
             type: 'html-keyboard-response',
             data: {
                 exp_id: "WMT",
+                trial_id: "instructions",
                 phase: "nback-instr"
             },
             stimulus: instr_set[i],
@@ -252,6 +253,7 @@ var n_back_trial = {
         trial.stimulus = letter1;
         trial.data = {
             exp_id: 'WMT',
+            trial_id: "stimulus",
             phase: phase,
             nback: nback,
             match: mymatch,
@@ -515,12 +517,14 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     exp_block = [];
     allpermutes = permutator(NBACKARRAY);
     possiblepermutes = allpermutes.length;
-
     if (WMTTYPE === "c-wmt"){
         allbackarray = Array(possiblepermutes).fill(NBACKARRAY)
     } else if (WMTTYPE === "r-wmt"){
         allbackarray = permutator(NBACKARRAY);
     }
+
+    // Double the array
+    allbackarray = [...allbackarray, ...allbackarray]
 
     if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
     if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
@@ -550,8 +554,11 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
 }
 
 // Training block
-rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray14)
-cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray14)
+rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray13)
+cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray13)
+
+rwmt_exp2_block = wmtblock('r-wmt', 'training', nbackarray14)
+cwmt_exp2_block = wmtblock('c-wmt', 'training', nbackarray14)
 
 // Testing block
 rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13)
