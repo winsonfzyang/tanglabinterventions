@@ -202,7 +202,6 @@ function createseq(factors, BLOCK, TYPE) {
             // add phase=practice or trial
             trialstimulus = jsPsych.timelineVariable('stimulus', true);
             data = jsPsych.timelineVariable('data', true);
-
             trial.stimulus = trialstimulus;
             trial.data = {
                 exp_id: 'stroop',
@@ -211,7 +210,7 @@ function createseq(factors, BLOCK, TYPE) {
                 phase: data.phase,
                 stimulus: trialstimulus,
                 word: data.word,
-                color: data.color2,
+                color: data.color,
                 stimulus_type: data.stimulus_type,
                 correct_response: data.correct_response,
             };
