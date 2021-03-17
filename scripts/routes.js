@@ -14,6 +14,9 @@ module.exports = function(app){
     app.get('/WorkingMemoryTesting', function(request, response) {
         response.render('workingmemorytesting.html');
     });
+    app.get('/StroopTesting', function(request, response) {
+        response.render('workingmemorytesting_stroop.html');
+    });
 
     app.get('/NFfollowup', function(request, response) {
         response.render('NFfollowup.html');
