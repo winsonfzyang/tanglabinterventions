@@ -42,6 +42,13 @@ stroop_instrhelper.end_block =
     "<br>Please continue to the next block.</p>" +
     "</div>";
 
+stroop_instrhelper.conditional =
+    "<div class='WMT_instr'>" +
+    "<p>Great job and thank you for completing the practice block.</p>" +
+    "<p>Would you like to practice the task one more time?" +
+    "<p>Press <b style='color:#677be9 !important;'>y</b> to practice again. Press <b style='color:#d72965 !important;'>n</b> to skip the practice.</p>" +
+    "</div>";
+
 stroop_instrhelper.posttest =
     "<div class='stroop_instr'>" +
     "<p>In this task you will see colored word appear one at a time. </p>" +
@@ -256,11 +263,38 @@ var stroop2_procedure = createseq(stroop2_factors, 'stroop2', 'exp')
 
 
 // TODO: repeat practice if accuracy less than 50%
+var stroop_prac_block = [];
+stroop_prac_block.push(stroop2_instr);
+stroop_prac_block.push(stroop2_pract_procedure);
+
 var stroop_block = [];
 stroop_block.push(stroop2_instr);
 stroop_block.push(stroop2_pract_procedure);
 stroop_block.push(stroop_endpractice);
 stroop_block.push(stroop2_procedure);
+
+// Transition and condition to practice again or proceeed to experiment
+var pre_if_stroop = {
+    type: 'html-keyboard-response',
+    stimulus: stroop_instrhelper.conditional,
+    choices: ['y', 'n']
+}
+var if_node_stroop = {
+    timeline: [...stroop_prac_block, pre_if_stroop],
+    loop_function: function(){
+        check = jsPsych.data.getLastTrialData().values()[0];
+        if(check.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('n')){
+            return false; // skip repeat
+        } else {
+            return true;
+        }
+    }
+};
+
+var stroop_conditional_block = [];
+stroop_conditional_block.push(if_node_stroop);
+stroop_conditional_block.push(stroop_endpractice);
+
 
 var stroop_post_block = [];
 stroop_post_block.push(stroop_post_instr);
