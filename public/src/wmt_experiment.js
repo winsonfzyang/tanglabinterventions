@@ -34,7 +34,6 @@ function FinishTrainingSave() {
     // jsPsych.data.displayData()
 }
 
-
 // Set up Testing Save functions
 function CloseTestingSave() {
     $.ajax({
@@ -67,6 +66,30 @@ function FinishTestingSave() {
     // jsPsych.data.displayData()
 }
 
+// Separate tasks Save functions
+function StroopSave() {
+    $.ajax({
+        type: "POST",
+        url: "/wmt-stroop-data",
+        data: JSON.stringify(jsPsych.data.get().values()),
+        contentType: "application/json"
+    })
+        .done(function() {
+            window.location.href = "finish";
+        })
+        .fail(function() {
+            alert("Problem occurred while writing data to Dropbox. " +
+                "Data will be saved to your computer. " +
+                "Please contact the experimenter regarding this issue!");
+            var csv = jsPsych.data.get().csv();
+            var filename = jsPsych.data.get().values()[0].ID_DATE + "stroop_day_" + jsPsych.data.get().values()[0].daynumber + ".csv";
+            downloadCSV(csv, filename);
+            window.location.href = "finish";
+        });
+    // jsPsych.data.displayData()
+}
+
+
 // define welcome message trial
 var welcome_screen = {
     type: "html-button-response",
@@ -85,6 +108,33 @@ welcome_block.push(welcome_screen);
 // Set up full screen mode
 // bc_exp.push({type: 'fullscreen', fullscreen_mode: true}); /* enter fullscreen mode */
 // bc_exp.push({type: 'fullscreen', fullscreen_mode: false }); /* exit fullscreen mode */
+
+// Separate tasks
+function start_Stroop() {
+
+    /* start the experiment */
+    jsPsych.init({
+        show_progress_bar: true,
+        on_interaction_data_update: function(data) {
+            var trial = jsPsych.currentTrial();
+            trial.data.screen_focus = data.event;
+        },
+
+        timeline: [
+            ...welcome_block,
+            ...stroop_conditional_block,
+            ...stroop_post_block,
+        ],
+
+        /* on_close currently not working */
+        on_close: function() {
+            StroopSave()
+        },
+        on_finish: function() {
+            StroopSave()
+        }
+    });
+}
 
 // For Training
 function start_CWMT_Day() {

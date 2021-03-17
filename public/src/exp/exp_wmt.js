@@ -485,7 +485,7 @@ var ending_screen = {
     stimulus: "Practice session has ended. Please notify the experimenter!",
 };
 
-// Transition and condition to practice again or proceeed to experiment
+// Transition and condition to practice again or proceed to experiment
 var pre_if_trial = {
     type: 'html-keyboard-response',
     stimulus: wmt_instrhelper.conditional,

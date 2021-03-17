@@ -98,6 +98,27 @@ app.post('/bs-followup-data', function(request, response) {
     response.end();
 });
 
+app.post('/wmt-stroop-data', function(request, response) {
+    console.log("Posting data")
+    // Convert to CSV
+    DATA_CSV = JSON2CSV(request.body);
+
+    // Get ID_DATE
+    rows = DATA_CSV.split('\n');
+    ID_DATE_index = rows[0].split(',').indexOf('"ID_DATE"');
+    ID_DATE = rows[1].split(',')[ID_DATE_index];
+    ID_DATE = ID_DATE.replace(/"/g, "");
+
+    DAYNUMBER_index = rows[0].split(',').indexOf('"daynumber"');
+    DAYNUMBER = rows[1].split(',')[DAYNUMBER_index];
+    DAYNUMBER = DAYNUMBER.replace(/"/g, "");
+
+    filename = "wmt/" + ID_DATE + "_day_" + DAYNUMBER + "_stroop.csv";
+    saveDropbox(DATA_CSV, filename);
+    response.end();
+
+
+});
 
 // --- START THE SERVER
 var server = app.listen(process.env.PORT, function(){
