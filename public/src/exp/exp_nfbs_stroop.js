@@ -162,7 +162,28 @@ function createseq(factors, BLOCK, TYPE) {
 
 let stroop2_procedure = createseq(stroop2_factors, 'stroop2', 'exp')
 
+// Stim test
+var testtrial = {
+    type: 'html-keyboard-response',
+    stimulus: "<p class=" + "color_yellow" + " style='font-size:72px;'>" + "TEST" + "</p> ",
+    choices: ['f', 'j'],
+    prompt:
+        "<div id='container'>" +
+        "   <div class='row triple'>" +
+        "       <div class='column-3 left'>" +
+        "           <p class='center'>Angry</p>" +
+        "           <p class='center'>F</p>" +
+        "       </div>" +
+        "       <div class='column-3 right'>" +
+        "           <p class='center'>Happy</p>" +
+        "           <p class='center'>J</p>" +
+        "       </div>" +
+        "   </div>" +
+        "</div>",
+};
+
 let stroop_block = [];
 stroop_block.push(stroop2_instr);
 stroop_block.push(stroop2_procedure);
+// stroop_block.push(testtrial);
 

@@ -10,16 +10,15 @@ var n_back_set = ["../img/WMT/1f.bmp", "../img/WMT/2f.bmp", "../img/WMT/3f.bmp",
 var n_back_instr_set = ["../img/WMT/intro1.bmp", "../img/WMT/intro2.bmp", "../img/WMT/intro3.bmp", "../img/WMT/intro4.bmp"];
 
 // Constants
-const nbackarray13 = [0, 1, 2];
+const nbackarray14 = [0, 1, 2, 3];
 const PERCENTCORRECTPRACT = 0.40;
 const PERCENTCORRECT = 0.30;
 const FIXATION_DURATION = 2500; // 2500
 const PICTURE_DURATION = 500; // 500
-const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20; // 20 trials
 const NTRIALSTEST = 40; // 40 trials
 const NTRIALSPRAC = 5; // five practice trials
-const NTESTINGBLOCKS = 2; // No. of blocks for pre/post-training test
+const NTESTINGBLOCKS = 1; // No. of blocks for pre/post-training test
 const NTRAININGBLOCKS = 8; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
@@ -60,13 +59,6 @@ wmt_instrhelper.transition =
     "<p>Thank you for completing the practice block. We will now proceed to the experimental block.</p>" +
     "<p>This time, there will not be any feedback, so you will have to carry on until the task is finished. </p>" +
     "<p>The experiment will start once you press the button.</p>" +
-    "</div>";
-
-wmt_instrhelper.break_block =
-    "<div class='WMT_instr'>" +
-    "<p class='continue_next'>Great job and thank you! You are now finished with this block." +
-    "<br>We will have a short <b>" + BREAK_DUR/1000 + " seconds</b> break before we continue. " +
-    "<br>Enjoy the music and DO NOT close or refresh the page.</p>" +
     "</div>";
 
 wmt_instrhelper.end_block =
@@ -194,25 +186,6 @@ var n_back_trial = {
         }
     }
 }
-/* Transition */
-var wmt_blocktransition = {
-    type: 'instructions',
-    data: {exp_id: "WMT", trial_id: "blocktransition"},
-    pages: [
-        // Page 1
-        wmt_instrhelper.end_block,
-    ],
-    show_clickable_nav: true,
-    show_page_number: true,
-};
-var wmt_blockbreak = {
-    type: 'html-keyboard-response',
-    data: {exp_id: "WMT", trial_id: "blocktransition", stimulus: "break"},
-    stimulus: wmt_instrhelper.break_block,
-    choices: jsPsych.NO_KEYS,
-    trial_duration: BREAK_DUR,
-};
-
 /* Sound */
 const snd1 = new Audio("../sound/wmt_bgmusic.wav"); snd1.loop = true;
 var wmt_bgmusic = {
@@ -308,8 +281,6 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     } else if (WMTTYPE === "r-wmt"){
         allbackarray = permutator(NBACKARRAY);
     }
-
-    if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
     if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
 
     for (var x = 1; x <= NBLOCKS; ++x) {
@@ -325,15 +296,8 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
             exp_block.push(WMT_firstfixation);
             exp_block.push(n_back_sequences_i[nbacktest_i]);
         }
-        // inter-
-        if (TESTTYPE === "training"){
-            exp_block.push(wmt_bgmusic.start);
-            exp_block.push(wmt_blockbreak);
-            exp_block.push(wmt_bgmusic.stop);
-        }
-        exp_block.push(wmt_blocktransition);
     }
     return exp_block
 }
-rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13)
-cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13)
+rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray14)
+cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray14)
