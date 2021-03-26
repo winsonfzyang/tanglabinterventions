@@ -94,7 +94,8 @@ welcome.section.demographics =
     '           <label for="day"><b>Day Number: &nbsp;</b></label><input id="day" name="day" /><br/><br/>' +
     '			<!-- Randomized/Classical -->' +
     '           <label for="wmttype"><b>WMT Type: &nbsp;</b></label>' +
-    '           <input type="radio" name="wmttype" value="r-wmt" /> R-WMT &nbsp; ' +
+    //TODO: Open r-wmt when starting r-wmt version
+    // '           <input type="radio" name="wmttype" value="r-wmt" /> R-WMT &nbsp; ' +
     '           <input type="radio" name="wmttype" value="c-wmt" /> C-WMT &nbsp;' +
     '		<br><br>' +
     '		<!-- Demographics  button -->' +
