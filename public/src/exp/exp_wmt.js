@@ -23,12 +23,13 @@ const PERCENTCORRECT = 0.30;
 const FIXATION_DURATION = 2500; // 2500
 const PICTURE_DURATION = 500; // 500
 const FDBCK_DUR = 1000; // 1000
-const BREAK_DUR = 50000; // 50 seconds break
-const NTRIALS = 20; // 20 trials
+const BREAK_DUR = 50; // 50 seconds break
+const NTRIALS = 40; // 40 trials
 const NTRIALSTEST = 40; // 40 trials
 const NTRIALSPRAC = 5; // five practice trials
 const NTESTINGBLOCKS = 2; // No. of blocks for pre/post-training test
-const NTRAININGBLOCKS = 8; // Need to change to 8
+const NTRAININGBLOCKS_15 = 6; // 6 blocks
+const NTRAININGBLOCKS_610 = 5; // 5 blocks
 var HOWMANYBACK;
 var SEQLENGTH;
 var letter1;
@@ -461,7 +462,8 @@ function multipleseq(NREPS, TYPE){
 }
 
 n_back_sequences_practice = makeNbackSeq('practice');
-n_back_sequences_exp = multipleseq(NTRAININGBLOCKS, 'exp')
+n_back_sequences_exp_15 = multipleseq(NTRAININGBLOCKS_15, 'exp')
+n_back_sequences_exp_610 = multipleseq(NTRAININGBLOCKS_610, 'exp')
 n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 
 // Practice block
@@ -515,7 +517,7 @@ conditional_practice.push(ending_screen);
 
 
 // Real WMT blocks
-function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
+function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
     exp_block = [];
     allpermutes = permutator(NBACKARRAY);
     possiblepermutes = allpermutes.length;
@@ -528,7 +530,10 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     // Double the array
     allbackarray = [...allbackarray, ...allbackarray]
 
-    if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
+    if (TESTTYPE === "training"){
+        if (DAYNO === "day_15"){NBLOCKS = NTRAININGBLOCKS_15; n_back_sequences = n_back_sequences_exp_15}
+        if (DAYNO === "day_610"){NBLOCKS = NTRAININGBLOCKS_610;n_back_sequences = n_back_sequences_exp_610}
+    }
     if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
 
     for (var x = 1; x <= NBLOCKS; ++x) {
@@ -562,12 +567,12 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
 }
 
 // Training block
-rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray13)
-cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray13)
+rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray13, "day_15")
+cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray13, "day_15")
 
-rwmt_exp2_block = wmtblock('r-wmt', 'training', nbackarray14)
-cwmt_exp2_block = wmtblock('c-wmt', 'training', nbackarray14)
+rwmt_exp2_block = wmtblock('r-wmt', 'training', nbackarray14, "day_610")
+cwmt_exp2_block = wmtblock('c-wmt', 'training', nbackarray14, "day_610")
 
 // Testing block
-rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13)
-cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13)
+rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13, "")
+cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13, "")
