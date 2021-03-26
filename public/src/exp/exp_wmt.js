@@ -25,7 +25,7 @@ const PICTURE_DURATION = 500; // 500
 const FDBCK_DUR = 1000; // 1000
 const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20; // 20 trials
-const NTRIALSTEST = 40; // 20 trials
+const NTRIALSTEST = 40; // 40 trials
 const NTRIALSPRAC = 5; // five practice trials
 const NTESTINGBLOCKS = 2; // No. of blocks for pre/post-training test
 const NTRAININGBLOCKS = 8; // Need to change to 8
@@ -199,6 +199,7 @@ var WMT_fixation = {
         phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
         nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
         mymatch = jsPsych.data.getLastTrialData().values()[0]["match"];
+        blockno = jsPsych.data.getLastTrialData().values()[0]["block"];
 
         trial.data = {
             exp_id: 'WMT',
@@ -207,6 +208,7 @@ var WMT_fixation = {
             nback: nback,
             match: mymatch,
             stimulus: "fixation",
+            block: blockno,
         };
     },
     type: "html-keyboard-response",
@@ -232,6 +234,7 @@ var n_back_trial = {
         phase = jsPsych.timelineVariable('phase', true);
         nback = jsPsych.timelineVariable('nback', true);
         mymatch = jsPsych.timelineVariable('match', true);
+        blockno = jsPsych.timelineVariable('block', true);
 
         if (sequence.length < HOWMANYBACK) {
             letter = jsPsych.randomization.sampleWithoutReplacement(n_back_set, 1)[0]
@@ -258,6 +261,7 @@ var n_back_trial = {
             nback: nback,
             match: mymatch,
             stimulus: letter,
+            block: blockno
         };
     },
     type: 'html-keyboard-response',
@@ -307,8 +311,6 @@ var overallfeedback = {
 
         test_trials = test_trials.filter(trial => trial.nback == lastRow["nback"]);
         test_trials = test_trials.filter(trial => trial.stimulus == "fixation");
-
-        console.log(test_trials)
 
         HOWMANYBACK = lastRow["nback"]
         SEQLENGTH = test_trials.length;
@@ -531,13 +533,19 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
 
     for (var x = 1; x <= NBLOCKS; ++x) {
         n_back_sequences_i = n_back_sequences[x-1]
-
         nbackindex = Math.floor(Math.random() * allbackarray .length)
         targetindex = allbackarray[nbackindex]
         allbackarray.splice(nbackindex, 1);
 
         for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
+
+            // Add block
+            timeline_var_i = n_back_sequences_i[nbacktest_i].timeline_variables
+            for (var j = 0; j <= (timeline_var_i.length -1); ++j) {
+                n_back_sequences_i[nbacktest_i].timeline_variables[j].block = x
+            }
+
             exp_block.push(N_back_instr[nbacktest_i]);
             exp_block.push(WMT_firstfixation);
             exp_block.push(n_back_sequences_i[nbacktest_i]);
