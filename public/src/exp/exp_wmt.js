@@ -123,8 +123,7 @@ wmt_instrhelper.cwmt_transition =
 
 wmt_instrhelper.break_block =
     "<div class='WMT_instr'>" +
-    "<p class='continue_next'>Great job and thank you! You are now finished with this block." +
-    "<br>We will have a short <b>" + BREAK_DUR/1000 + " seconds</b> break before we continue.</p>" +
+    "<p class='continue_next'>We will have a short <b>" + BREAK_DUR/1000 + " seconds</b> break before we continue.</p>" +
     "</div>";
 
 wmt_instrhelper.end_block =
