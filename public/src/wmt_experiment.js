@@ -2,6 +2,29 @@
 /* Set up experiment procedure and timeline */
 /* **************************************** */
 
+// TestSaving Function
+function FinishTestSavingSave() {
+    $.ajax({
+        type: "POST",
+        url: "/test-save-data",
+        data: JSON.stringify(jsPsych.data.get().values()),
+        contentType: "application/json"
+    })
+        .done(function() {
+            window.location.href = "finish";
+        })
+        .fail(function() {
+            alert("Problem occurred while writing data to Dropbox. " +
+                "Data will be saved to your computer. " +
+                "Please contact the experimenter regarding this issue!");
+            var csv = jsPsych.data.get().csv();
+            var filename = jsPsych.data.get().values()[0].ID_DATE + "_testsave_day_" + jsPsych.data.get().values()[0].daynumber + ".csv";
+            downloadCSV(csv, filename);
+            window.location.href = "finish";
+        });
+    // jsPsych.data.displayData()
+}
+
 // Set up Training Save functions
 function CloseTrainingSave() {
     $.ajax({
@@ -132,6 +155,28 @@ function start_Stroop() {
         },
         on_finish: function() {
             StroopSave()
+        }
+    });
+}
+
+// Testing if savingworks
+function start_TestSave_Day() {
+
+    /* start the experiment */
+    jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
+        show_progress_bar: true,
+        on_interaction_data_update: function(data) {
+            var trial = jsPsych.currentTrial();
+            trial.data.screen_focus = data.event;
+        },
+
+        timeline: [
+            ...welcome_block,
+            ...testsave_block,
+        ],
+        on_finish: function() {
+            FinishTestSavingSave()
         }
     });
 }

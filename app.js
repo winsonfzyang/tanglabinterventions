@@ -23,6 +23,22 @@ app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+app.post('/test-save-data', function(request, response) {
+    console.log("Posting data")
+    // Convert to CSV
+    DATA_CSV = JSON2CSV(request.body);
+
+    // Get ID_DATE
+    rows = DATA_CSV.split('\n');
+    ID_DATE_index = rows[0].split(',').indexOf('"ID_DATE"');
+    ID_DATE = rows[1].split(',')[ID_DATE_index];
+    ID_DATE = ID_DATE.replace(/"/g, "");
+
+    filename = "wmt/" + ID_DATE + "_testsave.csv";
+    saveDropbox(DATA_CSV, filename);
+    response.end();
+});
+
 app.post('/wmt-training-data', function(request, response) {
     console.log("Posting data")
     // Convert to CSV

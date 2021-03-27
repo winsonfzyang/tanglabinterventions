@@ -575,3 +575,9 @@ cwmt_exp2_block = wmtblock('c-wmt', 'training', nbackarray14, "day_610")
 // Testing block
 rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13, "")
 cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13, "")
+
+
+// Testing Save function
+var testsave_block = [];
+testsave_block.push(wmt_instr);
+testsave_block.push(WMT_firstfixation);

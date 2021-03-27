@@ -5,6 +5,10 @@ module.exports = function(app){
         response.render('index.html');
     });
 
+    app.get('/TestSavingTest', function(request, response) {
+        response.render('savetesting.html');
+    });
+
     app.get('/WorkingMemoryPractice', function(request, response) {
         response.render('workingmemorypractice.html');
     });
