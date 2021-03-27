@@ -15,6 +15,9 @@ module.exports = function(app){
     app.get('/WorkingMemoryTraining', function(request, response) {
         response.render('workingmemorytraining.html');
     });
+    app.get('/WorkingMemoryTraining_A', function(request, response) {
+        response.render('workingmemorytraining_A.html');
+    });
     app.get('/WorkingMemoryTesting', function(request, response) {
         response.render('workingmemorytesting.html');
     });
