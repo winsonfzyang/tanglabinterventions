@@ -16,8 +16,9 @@ for (var i = 0; i <= 3; ++i) {
 
 
 // Constants
-const nbackarray14 = [0, 1, 2, 3];
-const nbackarray13 = [0, 1, 2];
+const nbackarray234 = [1, 2, 3];
+const nbackarray123 = [0, 1, 2];
+const nbackarray223 = [1, 1, 2];
 const PERCENTCORRECTPRACT = 0.40;
 const PERCENTCORRECT = 0.30;
 const FIXATION_DURATION = 2500; // 2500
@@ -28,8 +29,7 @@ const NTRIALS = 40; // 40 trials
 const NTRIALSTEST = 40; // 40 trials
 const NTRIALSPRAC = 5; // five practice trials
 const NTESTINGBLOCKS = 2; // No. of blocks for pre/post-training test
-const NTRAININGBLOCKS_15 = 6; // 6 blocks
-const NTRAININGBLOCKS_610 = 5; // 5 blocks
+const NTRAININGBLOCKS = 6; // 6 blocks
 var HOWMANYBACK;
 var SEQLENGTH;
 var letter1;
@@ -461,8 +461,7 @@ function multipleseq(NREPS, TYPE){
 }
 
 n_back_sequences_practice = makeNbackSeq('practice');
-n_back_sequences_exp_15 = multipleseq(NTRAININGBLOCKS_15, 'exp')
-n_back_sequences_exp_610 = multipleseq(NTRAININGBLOCKS_610, 'exp')
+n_back_sequences_exp = multipleseq(NTRAININGBLOCKS, 'exp')
 n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 
 // Practice block
@@ -530,8 +529,9 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
     allbackarray = [...allbackarray, ...allbackarray]
 
     if (TESTTYPE === "training"){
-        if (DAYNO === "day_15"){NBLOCKS = NTRAININGBLOCKS_15; n_back_sequences = n_back_sequences_exp_15}
-        if (DAYNO === "day_610"){NBLOCKS = NTRAININGBLOCKS_610;n_back_sequences = n_back_sequences_exp_610}
+        if (DAYNO === "day_12"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
+        if (DAYNO === "day_35"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
+        if (DAYNO === "day_610"){NBLOCKS = NTRAININGBLOCKS;n_back_sequences = n_back_sequences_exp}
     }
     if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
 
@@ -566,15 +566,18 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
 }
 
 // Training block
-rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray13, "day_15")
-cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray13, "day_15")
+rwmt_exp_block12 = wmtblock('r-wmt', 'training', nbackarray123, "day_12")
+cwmt_exp_block12 = wmtblock('c-wmt', 'training', nbackarray123, "day_12")
 
-rwmt_exp2_block = wmtblock('r-wmt', 'training', nbackarray14, "day_610")
-cwmt_exp2_block = wmtblock('c-wmt', 'training', nbackarray14, "day_610")
+rwmt_exp_block35 = wmtblock('r-wmt', 'training', nbackarray223, "day_35")
+cwmt_exp_block35 = wmtblock('c-wmt', 'training', nbackarray223, "day_35")
+
+rwmt_exp_block610 = wmtblock('r-wmt', 'training', nbackarray234, "day_610")
+cwmt_exp_block610 = wmtblock('c-wmt', 'training', nbackarray234, "day_610")
 
 // Testing block
-rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13, "")
-cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13, "")
+rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray123, "")
+cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray123, "")
 
 
 // Testing Save function

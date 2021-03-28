@@ -190,7 +190,7 @@ function start_TestSave_Day() {
 }
 
 // For Training
-function start_CWMT_Day() {
+function start_CWMT_Day12() {
 
     /* start the experiment */
     jsPsych.init({
@@ -203,7 +203,7 @@ function start_CWMT_Day() {
 
         timeline: [
             ...welcome_block,
-            ...cwmt_exp_block,
+            ...cwmt_exp_block12,
             ...aes_block
 
         ],
@@ -217,7 +217,7 @@ function start_CWMT_Day() {
         }
     });
 }
-function start_RWMT_Day() {
+function start_RWMT_Day12() {
 
     /* start the experiment */
     jsPsych.init({
@@ -230,7 +230,7 @@ function start_RWMT_Day() {
 
         timeline: [
             ...welcome_block,
-            ...rwmt_exp_block,
+            ...rwmt_exp_block12,
             ...aes_block
 
         ],
@@ -245,8 +245,7 @@ function start_RWMT_Day() {
     });
 }
 
-
-function start_CWMT2_Day() {
+function start_CWMT_Day35() {
 
     /* start the experiment */
     jsPsych.init({
@@ -259,7 +258,7 @@ function start_CWMT2_Day() {
 
         timeline: [
             ...welcome_block,
-            ...cwmt_exp2_block,
+            ...cwmt_exp_block35,
             ...aes_block
 
         ],
@@ -273,7 +272,7 @@ function start_CWMT2_Day() {
         }
     });
 }
-function start_RWMT2_Day() {
+function start_RWMT_Day35() {
 
     /* start the experiment */
     jsPsych.init({
@@ -286,7 +285,62 @@ function start_RWMT2_Day() {
 
         timeline: [
             ...welcome_block,
-            ...rwmt_exp2_block,
+            ...rwmt_exp_block35,
+            ...aes_block
+
+        ],
+
+        /* on_close currently not working */
+        on_close: function() {
+            CloseTrainingSave()
+        },
+        on_finish: function() {
+            FinishTrainingSave()
+        }
+    });
+}
+
+function start_CWMT_Day610() {
+
+    /* start the experiment */
+    jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
+        show_progress_bar: true,
+        on_interaction_data_update: function(data) {
+            var trial = jsPsych.currentTrial();
+            trial.data.screen_focus = data.event;
+        },
+
+        timeline: [
+            ...welcome_block,
+            ...cwmt_exp_block610,
+            ...aes_block
+
+        ],
+
+        /* on_close currently not working */
+        on_close: function() {
+            CloseTrainingSave()
+        },
+        on_finish: function() {
+            FinishTrainingSave()
+        }
+    });
+}
+function start_RWMT_Day610() {
+
+    /* start the experiment */
+    jsPsych.init({
+        preload_images: [wmt_fixation_stim0, ...n_back_set],
+        show_progress_bar: true,
+        on_interaction_data_update: function(data) {
+            var trial = jsPsych.currentTrial();
+            trial.data.screen_focus = data.event;
+        },
+
+        timeline: [
+            ...welcome_block,
+            ...rwmt_exp_block610,
             ...aes_block
 
         ],
@@ -356,8 +410,6 @@ function start_RWMT_DayA() {
         }
     });
 }
-
-
 function start_CWMT2_DayA() {
 
     /* start the experiment */
