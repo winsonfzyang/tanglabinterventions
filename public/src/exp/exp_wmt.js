@@ -198,6 +198,7 @@ var WMT_fixation = {
     on_start: function(trial) {
         phase = jsPsych.data.getLastTrialData().values()[0]["phase"];
         nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
+        nno = jsPsych.data.getLastTrialData().values()[0]["nno"];
         mymatch = jsPsych.data.getLastTrialData().values()[0]["match"];
         blockno = jsPsych.data.getLastTrialData().values()[0]["block"];
 
@@ -209,6 +210,7 @@ var WMT_fixation = {
             match: mymatch,
             stimulus: "fixation",
             block: blockno,
+            nno: nno
         };
     },
     type: "html-keyboard-response",
@@ -232,6 +234,7 @@ var n_back_trial = {
     on_start: function(trial) {
         HOWMANYBACK = jsPsych.timelineVariable('nback', true);
         phase = jsPsych.timelineVariable('phase', true);
+        nno = jsPsych.timelineVariable('nno', true);
         nback = jsPsych.timelineVariable('nback', true);
         mymatch = jsPsych.timelineVariable('match', true);
         blockno = jsPsych.timelineVariable('block', true);
@@ -261,7 +264,8 @@ var n_back_trial = {
             nback: nback,
             match: mymatch,
             stimulus: letter,
-            block: blockno
+            block: blockno,
+            nno: nno,
         };
     },
     type: 'html-keyboard-response',
@@ -540,7 +544,6 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
         nbackindex = Math.floor(Math.random() * allbackarray .length)
         targetindex = allbackarray[nbackindex]
         allbackarray.splice(nbackindex, 1);
-
         for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
 
@@ -548,6 +551,12 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
             timeline_var_i = n_back_sequences_i[nbacktest_i].timeline_variables
             for (var j = 0; j <= (timeline_var_i.length -1); ++j) {
                 n_back_sequences_i[nbacktest_i].timeline_variables[j].block = x
+            }
+
+            // Add n-back level number
+            nno_i = i+1
+            for (var qq = 0; qq <= (timeline_var_i.length -1); ++qq) {
+                n_back_sequences_i[nbacktest_i].timeline_variables[qq].nno = nno_i
             }
 
             exp_block.push(N_back_instr[nbacktest_i]);
