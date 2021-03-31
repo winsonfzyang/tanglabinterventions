@@ -538,33 +538,26 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY, DAYNO){
         if (DAYNO === "day_610"){NBLOCKS = NTRAININGBLOCKS;n_back_sequences = n_back_sequences_exp}
     }
     if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
-
     for (var x = 1; x <= NBLOCKS; ++x) {
         n_back_sequences_i = n_back_sequences[x-1]
-        nbackindex = Math.floor(Math.random() * allbackarray .length)
+        nbackindex = Math.floor(Math.random()*allbackarray.length)
         targetindex = allbackarray[nbackindex]
         allbackarray.splice(nbackindex, 1);
-        for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
+        // For each n-back level
+        for (var i = 0; i <= (NBACKARRAY.length - 1); ++i) {
             nbacktest_i = targetindex[i]
-
-            // Add block
-            timeline_var_i = n_back_sequences_i[nbacktest_i].timeline_variables
-            for (var j = 0; j <= (timeline_var_i.length -1); ++j) {
-                n_back_sequences_i[nbacktest_i].timeline_variables[j].block = x
+            n_back_sequences_ij = {...n_back_sequences_i[nbacktest_i]};
+            timeline_var_i = n_back_sequences_ij.timeline_variables
+            for (var j = 0; j <= (timeline_var_i.length - 1); ++j) {
+                n_back_sequences_ij.timeline_variables[j].block = x
+                n_back_sequences_ij.timeline_variables[j].nno = i+1
             }
-
-            // Add n-back level number
-            nno_i = i+1
-            for (var qq = 0; qq <= (timeline_var_i.length -1); ++qq) {
-                n_back_sequences_i[nbacktest_i].timeline_variables[qq].nno = nno_i
-            }
-
             exp_block.push(N_back_instr[nbacktest_i]);
             exp_block.push(WMT_firstfixation);
-            exp_block.push(n_back_sequences_i[nbacktest_i]);
+            exp_block.push(n_back_sequences_ij);
         }
         // inter-
-        if (TESTTYPE === "training"){
+        if (TESTTYPE === "training") {
             exp_block.push(wmt_bgmusic.start);
             exp_block.push(wmt_blockbreak);
             exp_block.push(wmt_bgmusic.stop);
