@@ -56,7 +56,7 @@ var closing_screen = {
     },
     choices: ['Click here to continue'],
     on_trial_start: function() { setTimeout(function() {setDisplay("jspsych-btn","")}, 1000)},
-    stimulus: "The system will now ask you to save the file. Please save the file and send it to us",
+    stimulus: "The system may ask you to save the file. If so, please save the file and send it to us",
 };
 closing_block = [];
 closing_block.push(closing_screen);
@@ -71,6 +71,7 @@ function start_NF_followup() {
 
     /* start the experiment */
     jsPsych.init({
+        preload_images: [...emostim_angry, ...emostim_happy],
         show_progress_bar: false,
         on_interaction_data_update: function(data) {
             trial = jsPsych.currentTrial();
