@@ -58,7 +58,7 @@ var closing_screen = {
     },
     choices: ['Click here to continue'],
     on_trial_start: function() { setTimeout(function() {setDisplay("jspsych-btn","")}, 1000)},
-    stimulus: "The system will now ask you to save the file. Please save the file and send it to us",
+    stimulus: "The system may ask you to save the file. If so, please save the file and send it to us",
 };
 closing_block = [];
 closing_block.push(closing_screen);
@@ -80,8 +80,9 @@ function start_BS_followup() {
 
         timeline: [
             ...welcome_block,
-            ...stroop_block,
-            ...cwmt_test_block
+            ...bsstroop_block,
+            ...cwmt_test_block,
+            ...closing_block
         ],
 
         /* on_close currently not working */

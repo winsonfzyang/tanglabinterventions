@@ -285,4 +285,9 @@ let stroop_block = [];
 stroop_block.push(stroop2_instr);
 stroop_block.push(stroop2_pract_procedure);
 stroop_block.push(stroop_endpractice);
+stroop_block.push(stroop_post_instr);
 stroop_block.push(stroop2_procedure);
+
+let bsstroop_block = [];
+bsstroop_block.push(stroop_post_instr);
+bsstroop_block.push(stroop2_procedure);
