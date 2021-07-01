@@ -73,7 +73,7 @@ function makeNbackInstr() {
         N_back_instr_i = {
             type: 'html-keyboard-response',
             data: {
-                exp_id: "WMT",
+                exp_id: "wmt",
                 phase: "nback-instr"
             },
             stimulus: "<p><img src=" + n_back_instr_set[i] + " width='800'></p>",
@@ -90,7 +90,7 @@ var WMT_firstfixation = {
         nback = jsPsych.data.getLastTrialData().values()[0]["nback"];
 
         trial.data = {
-            exp_id: 'WMT',
+            exp_id: 'wmt',
             trial_id: "fixation",
             phase: phase,
             nback: nback,
@@ -112,7 +112,7 @@ var WMT_fixation = {
         mymatch = jsPsych.data.getLastTrialData().values()[0]["match"];
 
         trial.data = {
-            exp_id: 'WMT',
+            exp_id: 'wmt',
             trial_id: "fixation",
             phase: phase,
             nback: nback,
@@ -163,7 +163,7 @@ var n_back_trial = {
         letter = letter.replace(/^.*[\\\/]/, '');
         trial.stimulus = letter1;
         trial.data = {
-            exp_id: 'WMT',
+            exp_id: 'wmt',
             phase: phase,
             nback: nback,
             match: mymatch,
@@ -194,7 +194,7 @@ var wmt_bgmusic = {
 wmt_bgmusic.start = {
     type: 'call-function',
     data: {
-        exp_id: "WMT",
+        exp_id: "wmt",
         trial_id: "bg-music-break-start"
     },
     func: function() {snd1.play()}
@@ -202,7 +202,7 @@ wmt_bgmusic.start = {
 wmt_bgmusic.stop = {
     type: 'call-function',
     data: {
-        exp_id: "WMT",
+        exp_id: "wmt",
         trial_id: "bg-music-break-stop"
     },
     func: function() {snd1.pause(); snd1.currentTime = 0;}
@@ -224,10 +224,6 @@ function createseqence(NBACK, TYPE){
         NMATCHTRIALS = PERCENTCORRECTPRACT*NTRIALSPRAC;
         NNONMATCHTRIALS = NTRIALSPRAC - NMATCHTRIALS;
     } else if (TYPE === 'exp') {
-        SEQLENGTH = NTRIALS + NBACK;
-        NMATCHTRIALS = PERCENTCORRECT*NTRIALS;
-        NNONMATCHTRIALS = NTRIALS - NMATCHTRIALS;
-    } else if (TYPE === 'testing') {
         SEQLENGTH = NTRIALSTEST + NBACK;
         NMATCHTRIALS = PERCENTCORRECT*NTRIALSTEST;
         NNONMATCHTRIALS = NTRIALSTEST - NMATCHTRIALS;
@@ -267,8 +263,7 @@ function multipleseq(NREPS, TYPE){
     return sequence
 }
 
-n_back_sequences_exp = multipleseq(NTRAININGBLOCKS, 'exp')
-n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
+n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'exp')
 
 // Real WMT blocks
 function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
@@ -281,7 +276,7 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     } else if (WMTTYPE === "r-wmt"){
         allbackarray = permutator(NBACKARRAY);
     }
-    if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
+    if (TESTTYPE === "exp"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
 
     for (var x = 1; x <= NBLOCKS; ++x) {
         n_back_sequences_i = n_back_sequences[x-1]
@@ -299,5 +294,5 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     }
     return exp_block
 }
-rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray14)
-cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray14)
+rwmt_test_block = wmtblock('r-wmt', 'exp', nbackarray14)
+cwmt_test_block = wmtblock('c-wmt', 'exp', nbackarray14)
